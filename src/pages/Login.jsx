@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../components/NavBar";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -10,11 +11,11 @@ const Login = () => {
     e.preventDefault();
 
     if (username.trim() === "") {
-      setError(" Please enter your name!...");
+      setError("Please enter your name!...");
       return;
     }
 
-    localStorage.setItem("weatherAppUser", username);
+    localStorage.setItem("weatherAppUser", username.trim());
     navigate("/dashboard");
   };
 
@@ -24,34 +25,51 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-100">
-      <form
-        onSubmit={handleLogin}
-        className="bg-white p-8 rounded shadow-md w-full max-w-sm"
-      >
-        <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
-          Login
-        </h2>
+    <div className="min-h-screen bg-gradient-to-b from-[#dfeffe] to-[#cfe7ff]">
+      <NavBar />
 
-        <input
-          type="text"
-          placeholder="Enter your name"
-          value={username}
-          onChange={handleChange}
-          className="w-full px-4 py-2 mb-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-center px-4 py-10">
+        <div className="w-full max-w-md rounded-2xl bg-white p-10 shadow-lg">
+          <h1 className="mb-6 text-center text-2xl font-bold text-blue-700">
+            Welcome back
+          </h1>
 
-        {error && (
-          <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
-        )}
+          <form onSubmit={handleLogin} className="flex flex-col gap-4">
+            <label className="text-sm font-medium text-slate-700">
+              Your name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your name"
+              value={username}
+              onChange={handleChange}
+              className={`w-full rounded-lg border px-4 py-2 outline-none focus:ring-2 ${
+                error
+                  ? "border-red-500 focus:ring-red-300"
+                  : "border-slate-300 focus:ring-blue-400"
+              }`}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? "login-error" : undefined}
+            />
 
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
-        >
-          Enter Dashboard
-        </button>
-      </form>
+            {error && (
+              <p
+                id="login-error"
+                className="text-center text-sm font-medium text-red-600"
+              >
+                {error}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="mt-2 w-full rounded-lg bg-blue-600 py-2 text-white transition hover:bg-blue-700"
+            >
+              Go to Dashboard
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
