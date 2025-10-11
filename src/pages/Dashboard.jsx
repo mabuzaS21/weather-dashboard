@@ -87,7 +87,7 @@ const Dashboard = () => {
         {!weather && !loading && !error && (
           <section className="mt-4">
             <div className="rounded-2xl bg-white p-8 text-center shadow">
-              <h3 className="text-lg font-semibold text-slate-800">Search a city to begin</h3>
+              <h3 className="text-lg font-semibold text-slate-800">SEARCH A CITY</h3>
               <p className="mt-1 text-sm text-slate-600">
               </p>
             </div>
