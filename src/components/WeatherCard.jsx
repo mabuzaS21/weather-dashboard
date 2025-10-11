@@ -1,20 +1,35 @@
 import React from "react";
 
 const WeatherCard = ({ weather }) => {
+  const { location, current } = weather;
+
   return (
-    <div className="mt-6 bg-white p-6 rounded shadow-md text-center">
-      <h2 className="text-2xl font-semibold mb-2">
-        {weather.location.name}, {weather.location.country}
+    <div className="mx-auto mt-8 w-full max-w-md rounded-2xl bg-white p-6 text-center shadow-md">
+      <h2 className="mb-2 text-2xl font-semibold text-blue-700">
+        {location.name}, {location.country}
       </h2>
+
       <img
-        src={weather.current.condition.icon}
-        alt={weather.current.condition.text}
-        className="mx-auto"
+        src={current.condition.icon}
+        alt={current.condition.text}
+        className="mx-auto h-20 w-20"
       />
-      <p className="text-xl">{weather.current.temp_c}°C</p>
-      <p className="text-gray-600">{weather.current.condition.text}</p>
-      <p>Humidity: {weather.current.humidity}%</p>
-      <p>Wind: {weather.current.wind_kph} kph</p>
+
+      <p className="mt-2 text-4xl font-bold text-slate-800">
+        {current.temp_c}°C
+      </p>
+      <p className="text-slate-600">{current.condition.text}</p>
+
+      <hr className="my-4 border-slate-200" />
+
+      <div className="flex justify-around text-sm text-slate-700">
+        <p>
+          💧 <span className="font-medium">{current.humidity}%</span> Humidity
+        </p>
+        <p>
+          🌬️ <span className="font-medium">{current.wind_kph} km/h</span> Wind
+        </p>
+      </div>
     </div>
   );
 };
