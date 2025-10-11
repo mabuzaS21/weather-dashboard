@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../components/NavBar";
 import SearchBar from "../components/SearchBar";
 import WeatherCard from "../components/WeatherCard";
 import { fetchWeather } from "../api/weather";
@@ -44,26 +45,55 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-start p-4">
-      <div className="w-full flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Weather Dashboard</h1>
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-        >
-          Logout
-        </button>
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-[#dfeffe] to-[#cfe7ff]">
+      <NavBar />
 
-      <h2 className="text-xl mb-4"> Welcome, {username}</h2>
+      <main className="mx-auto w-full max-w-6xl px-4 py-6">
+        <div className="mb-6 flex items-center justify-between">
+          <h1 className="text-xl font-semibold text-slate-800">
+            Weather Dashboard
+          </h1>
+          <button
+            onClick={handleLogout}
+            className="rounded-lg bg-red-500 px-4 py-2 text-white transition hover:bg-red-600"
+          >
+            Logout
+          </button>
+        </div>
 
-      <SearchBar onSearch={handleSearch} />
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-sm text-slate-700">Welcome, <span className="font-medium">{username}</span></h2>
+          <div className="w-full sm:w-auto sm:min-w-[360px]">
+            <SearchBar onSearch={handleSearch} />
+          </div>
+        </div>
 
-      {error && <p className="text-red-500 mt-4">❌ {error}</p>}
+        
+        {error && (
+          <p className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+            ❌ {error}
+          </p>
+        )}
+        {loading && (
+          <p className="mt-2 text-sm text-blue-600">Loading weather data...</p>
+        )}
 
-      {loading && <p className="text-blue-500 mt-4">Loading weather data...</p>}
+        {weather && !loading && (
+          <section className="mt-4">
+            <WeatherCard weather={weather} />
+          </section>
+        )}
 
-      {weather && !loading && <WeatherCard weather={weather} />}
+        {!weather && !loading && !error && (
+          <section className="mt-4">
+            <div className="rounded-2xl bg-white p-8 text-center shadow">
+              <h3 className="text-lg font-semibold text-slate-800">Search a city to begin</h3>
+              <p className="mt-1 text-sm text-slate-600">
+              </p>
+            </div>
+          </section>
+        )}
+      </main>
     </div>
   );
 };
