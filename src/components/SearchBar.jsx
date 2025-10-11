@@ -7,22 +7,25 @@ const SearchBar = ({ onSearch }) => {
     e.preventDefault();
     if (city.trim() !== "") {
       onSearch(city);
-      setCity(""); 
+      setCity("");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center space-x-4 p-4">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-full items-center gap-3 rounded-lg bg-white p-3 shadow-sm"
+    >
       <input
         type="text"
-        placeholder="Enter city name"
+        placeholder="Enter city name..."
         value={city}
         onChange={(e) => setCity(e.target.value)}
-        className="border border-gray-300 rounded px-4 py-2 w-full"
+        className="flex-1 rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-300"
       />
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
       >
         Search
       </button>
