@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({
+  onSearch,
+  placeholder = "Enter city name",
+  maxWidth = 400, 
+}) => {
   const [city, setCity] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (city.trim() !== "") {
+    if (city.trim()) {
       onSearch(city);
       setCity("");
     }
@@ -14,18 +18,19 @@ const SearchBar = ({ onSearch }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-full items-center gap-3 rounded-lg bg-white p-3 shadow-sm"
+      className="flex items-center gap-2"
+      style={{ maxWidth, width: "100%" }}
     >
       <input
         type="text"
-        placeholder="Enter city name..."
+        placeholder={placeholder}
         value={city}
         onChange={(e) => setCity(e.target.value)}
-        className="flex-1 rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-300"
+        className="w-full rounded-md border border-slate-300 px-2 py-1 text-sm outline-none focus:border-sky-400"
       />
       <button
         type="submit"
-        className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+        className="rounded-md bg-sky-600 px-3 py-1 text-xs font-semibold text-white hover:bg-sky-700"
       >
         Search
       </button>
