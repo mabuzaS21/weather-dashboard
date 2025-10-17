@@ -1,15 +1,53 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import WeatherCard from "../components/WeatherCard";
 import { fetchWeather } from "../api/weather";
+
+function MiniDayCard({ dateISO, icon, condition, maxC }) {
+  const d = new Date(dateISO);
+  const weekday = d.toLocaleDateString(undefined, { weekday: "long" });
+  const fullDate = d.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+  });
+
+  return (
+    <div
+      className="w-[140px] h-[164px] rounded-[20px] text-center"
+      style={{
+        background: "#f3f4f6", 
+        boxShadow:
+          "0 10px 22px rgba(0,0,0,0.10), 0 4px 10px rgba(0,0,0,0.06)",
+    }}
+    >
+      
+      <img
+        src={icon}
+        alt={condition}
+        className="mx-auto -mt-5 h-8 w-8 select-none"
+        loading="lazy"
+      />
+
+      <div className="mt-1 text-[28px] leading-none font-extrabold text-slate-900">
+        {Math.round(maxC)}
+        <sup className="align-super text-[12px] font-semibold">°</sup>
+      </div>
+
+      <div className="mt-1 text-sm font-semibold text-slate-800">{weekday}</div>
+
+      <div className="mt-0.5 text-[12px] text-slate-500 px-2">{fullDate}</div>
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const nav = useNavigate();
   const [username, setUsername] = useState("");
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const u = localStorage.getItem("weatherAppUser");
@@ -31,7 +69,7 @@ export default function Dashboard() {
     } catch (e) {
       setWeather(null);
       setError(e.message || "City not found");
-    } finally { 
+    } finally {
       setLoading(false);
     }
   };
@@ -46,10 +84,10 @@ export default function Dashboard() {
         position: "fixed",
         inset: 0,
         overflow: "auto",
-        background: "linear-gradient(to bottom, #dfeffe, #cfe7ff)", 
+        background: "linear-gradient(to bottom, #dfeffe, #cfe7ff)",
       }}
     >
-     
+      
       <div className="sticky top-0 z-10 bg-sky-500/95 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
           <div className="flex items-center gap-2">
@@ -87,7 +125,7 @@ export default function Dashboard() {
 
         {weather && !loading && (
           <>
-
+          
             <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12">
               <div className="lg:col-span-5">
                 <div className="mx-auto max-w-xl">
@@ -111,8 +149,7 @@ export default function Dashboard() {
                     boxShadow:
                       "inset 0 0 40px rgba(0,0,0,0.10), 0 12px 26px rgba(0,0,0,0.10)",
                   }}
-                >
-                  
+                > 
                   <div className="flex items-stretch gap-4">
                     {hours.map((h) => (
                       <div
@@ -150,9 +187,9 @@ export default function Dashboard() {
                 className="mx-auto flex justify-center no-scrollbar"
                 style={{ minWidth: "1060px", flexWrap: "nowrap" }}
               >
-                
+              
                 <section
-                  className="shrink-0 rounded-[20px] p-4"
+                  className="shrink-0 rounded-[20px] p-6"
                   style={{
                     width: "500px",
                     boxSizing: "border-box",
@@ -166,36 +203,16 @@ export default function Dashboard() {
                     Overview Forecast
                   </h3>
 
-                  <div className="no-scrollbar flex gap-3 overflow-x-auto">
-                    {days.map((d) => (
-                      <div
+                  
+                 <div className="flex items-start justify-center " style={{ gap: "20px" }}>
+                    {days.slice(0, 3).map((d) => (
+                      <MiniDayCard
                         key={d.date}
-                        className="min-w-[150px] rounded-xl bg-white/85 p-3 text-center"
-                        style={{
-                          boxShadow:
-                            "inset 0 1px 0 rgba(255,255,255,0.7), 0 4px 10px rgba(0,0,0,0.06)",
-                        }}
-                      >
-                        <div className="text-[11px] font-semibold text-slate-600">
-                          {new Date(d.date).toLocaleDateString(undefined, {
-                            weekday: "short",
-                            month: "short",
-                            day: "numeric",
-                          })}
-                        </div>
-                        <img
-                          src={d.day.condition.icon}
-                          alt={d.day.condition.text}
-                          className="mx-auto my-1 h-9 w-9"
-                          loading="lazy"
-                        />
-                        <div className="text-[12px] text-slate-600">
-                          {d.day.condition.text}
-                        </div>
-                        <div className="mt-1 text-sm font-bold">
-                          {Math.round(d.day.maxtemp_c)}° / {Math.round(d.day.mintemp_c)}°
-                        </div>
-                      </div>
+                        dateISO={d.date}
+                        icon={d.day.condition.icon}
+                        condition={d.day.condition.text}
+                        maxC={d.day.maxtemp_c}
+                      />
                     ))}
                   </div>
                 </section>
@@ -256,8 +273,7 @@ export default function Dashboard() {
                 </section>
               </div>
             </div>
-           
-          </>
+          </> 
         )}
       </div>
 
