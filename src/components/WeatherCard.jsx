@@ -4,6 +4,7 @@ export default function WeatherCard({ weather }) {
   if (!weather) return null;
 
   const city = weather.location.name;
+  const country = weather.location.country;
   const temp = Math.round(weather.current.temp_c);
   const icon = weather.current.condition.icon;
   const condition = weather.current.condition.text;
@@ -21,38 +22,38 @@ export default function WeatherCard({ weather }) {
   const wind = `${Math.round(weather.current.wind_kph)} km/h`;
 
   return (
-    <div className="w-full flex justify-center">
-      <div
-        className="w-full max-w-[500px] rounded-[18px] bg-white/95 p-6 sm:p-7"
+   <div className="w-full flex justify-center">
+     <div
+       className="w-full max-w-[500px] rounded-[18px] bg-white/95 p-6 sm:p-7"
         style={{
-          boxShadow:
-            "0 28px 60px rgba(0,0,0,0.16), 0 8px 18px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.55)",
+         boxShadow:
+          "0 28px 60px rgba(0,0,0,0.16), 0 8px 18px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.55)",
         }}
-      >
-
-        <div className="flex flex-col items-center text-center">
-          <img
+      > 
+       <div className="flex flex-col items-center text-center">
+         <img
             src={icon}
             alt={condition}
             className="h-16 w-16 sm:h-20 sm:w-20 select-none"
             loading="lazy"
           />
-          <div className="mt-2 text-[48px] sm:text-[56px] font-extrabold text-slate-900 tracking-tight leading-none">
+       <div className="mt-2 text-[48px] sm:text-[56px] font-extrabold text-slate-900 tracking-tight leading-none">
             {temp}°C
-          </div>
-          <div className="mt-1 text-xl sm:text-2xl font-semibold text-slate-800 leading-tight">
-            {city}
-          </div>
-        </div>
+       </div>
 
-        <div className="mt-5 flex items-center justify-between text-[15px] sm:text-base">
+       <div className="mt-1 text-xl sm:text-2xl font-semibold text-slate-800 leading-tight">
+            {city}, {country}
+         </div>
+       </div>
+
+       <div className="mt-5 flex items-center justify-between text-[15px] sm:text-base">
           <div className="font-semibold text-slate-700">{dateLabel}</div>
           <div className="text-slate-700">{condition}</div>
-        </div>
+       </div>
 
-        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <div
-            className="flex items-center justify-between rounded-xl px-4 py-3 text-[15px] font-semibold text-slate-800"
+       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+         <div
+           className="flex items-center justify-between rounded-xl px-4 py-3 text-[15px] font-semibold text-slate-800"
             style={{
               background: "rgba(135,206,250,0.20)",
               boxShadow:
