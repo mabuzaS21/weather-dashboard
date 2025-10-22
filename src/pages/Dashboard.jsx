@@ -96,7 +96,7 @@ export default function Dashboard() {
           <span aria-hidden className="text-2xl">🌤️</span>
        </div>
 
-       <div className="absolute left-1/2 -translate-x-1/2 text-white text-sm">
+       <div className="absolute left-[60%] -translate-x-1/2 text-white text-sm">
            Welcome{username ? `, ${username}` : ""}
        </div>
 
